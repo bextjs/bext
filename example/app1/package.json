@@ -1,0 +1,18 @@
+{
+  "name": "bext-example",
+  "version": "1.0.0",
+  "description": "Example app using BextJS",
+  "main": "index.ts",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "bun --watch run index.ts"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0",
+    "bun-types": "latest"
+  },
+  "dependencies": {
+    "bext": "file:../../"
+  }
+}

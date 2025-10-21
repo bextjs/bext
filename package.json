@@ -1,0 +1,59 @@
+{
+  "name": "bext",
+  "version": "0.0.5",
+  "description": "A modern web framework built with Bun",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "dev": "bun run --watch src/index.ts",
+    "build": "bun build ./src/index.ts --outdir dist --target bun --format esm --minify && tsc --emitDeclarationOnly",
+    "prepublishOnly": "bun run build",
+    "test": "bun test",
+    "start": "bun run dist/index.js"
+  },
+  "files": [
+    "dist/index.js",
+    "dist/index.d.ts",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "bext",
+    "bextjs",
+    "bun",
+    "framework",
+    "web",
+    "server",
+    "typescript"
+  ],
+  "author": "Aniket Khote",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bextjs/bext.git"
+  },
+  "bugs": {
+    "url": "https://github.com/bextjs/bext/issues"
+  },
+  "homepage": "https://github.com/bextjs/bext#readme",
+  "engines": {
+    "bun": "^1.3.0",
+    "node": ">=22.20.0"
+  },
+  "devDependencies": {
+    "bun-types": "^1.3.0",
+    "typescript": "^5.9.3"
+  },
+  "peerDependencies": {
+    "bun": "^1.3.0"
+  },
+  "packageManager": "bun@1.3.0"
+}
