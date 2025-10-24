@@ -1,5 +1,5 @@
 import path from 'path';
-import type { RouterOptions } from '../router/types';
+import type { RouterOptions } from '../types';
 
 const DEFAULT_ROUTES_DIR = path.resolve(process.cwd(), "app/api");
 
@@ -9,7 +9,6 @@ const DEFAULT_ROUTES_DIR = path.resolve(process.cwd(), "app/api");
 export const DEFAULT_ROUTER_OPTIONS: Required<RouterOptions> = {
   cache: true,
   cacheTtl: 60000, // 1 minute
-  debug: false,
   prefix: ''
 };
 

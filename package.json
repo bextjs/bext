@@ -1,6 +1,6 @@
 {
   "name": "bext",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "A modern web framework built with Bun",
   "main": "dist/index.js",
   "module": "dist/index.js",
@@ -13,11 +13,11 @@
     }
   },
   "scripts": {
-    "dev": "bun run --watch src/index.ts",
     "build": "bun build ./src/index.ts --outdir dist --target bun --format esm --minify && tsc --emitDeclarationOnly",
     "prepublishOnly": "bun run build",
     "test": "bun test",
-    "start": "bun run dist/index.js"
+    "publish": "bun publish",
+    "publish:dry-run": "bun publish --dry-run"
   },
   "files": [
     "dist/index.js",

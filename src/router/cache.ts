@@ -1,4 +1,4 @@
-import type { RouteMatch } from './types';
+import type { RouteMatch } from '../types';
 
 /**
  * Cache entry with expiration

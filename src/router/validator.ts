@@ -1,7 +1,7 @@
 import { access, constants } from 'fs/promises';
 import path from 'path';
 import { RouteValidationError } from '../core/errors';
-import type { HttpMethod, Route } from './types';
+import type { HttpMethod, Route } from '../types';
 
 /**
  * Supported HTTP methods

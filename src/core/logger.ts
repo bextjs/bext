@@ -4,21 +4,18 @@
 export const logger = {
   debug: (message: string, ...args: any[]) => {
     if ((process.env.NODE_ENV || 'development') === 'development') {
-      console.debug(`[BEXT] ${message}`, ...args);
+      console.debug(`[BextJS] ${message}`, ...args);
     }
   },
   log: (message: string, ...args: any[]) => {
     if ((process.env.NODE_ENV || 'development') === 'development') {
-      console.log(`[BEXT] ${message}`, ...args);
+      console.log(`[BextJS] ${message}`, ...args);
     }
   },
   warn: (message: string, ...args: any[]) => {
-    console.warn(`[BEXT] ${message}`, ...args);
+    console.warn(`[BextJS] ${message}`, ...args);
   },
   error: (message: string, ...args: any[]) => {
-    console.error(`[BEXT] ${message}`, ...args);
+    console.error(`[BextJS] ${message}`, ...args);
   },
-  system: (message: string) => {
-    console.log(`${message}`);
-  }
 };

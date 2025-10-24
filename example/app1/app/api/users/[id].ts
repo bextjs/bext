@@ -11,25 +11,14 @@ export async function GET(ctx: Context) {
   const user = users.find(u => u.id === userId);
 
   if (!user) {
-    return new Response(
-      JSON.stringify({
-        success: false,
-        error: 'User not found'
-      }),
-      {
-        status: 404,
-        headers: { 'Content-Type': 'application/json' }
-      }
-    );
+    return ctx.json({
+      success: false,
+      error: 'User not found'
+    }, 404);
   }
 
-  return new Response(
-    JSON.stringify({
-      success: true,
-      data: user
-    }),
-    {
-      headers: { 'Content-Type': 'application/json' }
-    }
-  );
+  return ctx.json({
+    success: true,
+    data: user
+  }, 200);
 }

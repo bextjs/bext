@@ -1,5 +1,8 @@
-import { createServer } from "bext";
+import { createBextServer } from "bext";
 
-createServer({
-    port: 5001
-})
+const app = await createBextServer({
+  port: 5002
+});
+
+// Log server start
+console.log(`🚀 BextJS server started ${app.hostname}:${app.port}`);

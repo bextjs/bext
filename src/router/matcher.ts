@@ -1,7 +1,7 @@
 import { pathToFileURL } from 'url';
 import { RouteError } from '../core/errors';
+import type { HttpMethod, Route, RouteMatch } from '../types';
 import { RouteCache } from './cache';
-import type { HttpMethod, Route, RouteMatch } from './types';
 
 /**
  * Handles route matching and loading of route handlers

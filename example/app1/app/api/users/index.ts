@@ -7,21 +7,14 @@ const users = [
 ];
 
 export async function GET(ctx: Context) {
-  return new Response(
-    JSON.stringify({
-      success: true,
-      data: users,
-      meta: {
-        count: users.length,
-        timestamp: new Date().toISOString()
-      }
-    }),
-    {
-      headers: {
-        'Content-Type': 'application/json'
-      }
+  return ctx.json({
+    success: true,
+    data: users,
+    meta: {
+      count: users.length,
+      timestamp: new Date().toISOString()
     }
-  );
+  });
 }
 
 export async function POST(ctx: Context) {
@@ -30,16 +23,10 @@ export async function POST(ctx: Context) {
     const { name, email } = body;
 
     if (!name || !email) {
-      return new Response(
-        JSON.stringify({
-          success: false,
-          error: 'Name and email are required'
-        }),
-        {
-          status: 400,
-          headers: { 'Content-Type': 'application/json' }
-        }
-      );
+      return ctx.json({
+        success: false,
+        error: 'Name and email are required'
+      }, 400);
     }
 
     const newUser = {
@@ -50,26 +37,14 @@ export async function POST(ctx: Context) {
 
     users.push(newUser);
 
-    return new Response(
-      JSON.stringify({
-        success: true,
-        data: newUser
-      }),
-      {
-        status: 201,
-        headers: { 'Content-Type': 'application/json' }
-      }
-    );
+    return ctx.json({
+      success: true,
+      data: newUser
+    }, 201);
   } catch (error) {
-    return new Response(
-      JSON.stringify({
-        success: false,
-        error: 'Invalid JSON body'
-      }),
-      {
-        status: 400,
-        headers: { 'Content-Type': 'application/json' }
-      }
-    );
+    return ctx.json({
+      success: false,
+      error: 'Invalid JSON body'
+    }, 400);
   }
 }

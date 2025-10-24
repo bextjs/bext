@@ -1,4 +1,4 @@
-import type { Context, CookieOptions, Plugins } from "./router/types";
+import type { Context, CookieOptions, Plugins } from "./types";
 
 interface CreateContextOptions {
   params?: Record<string, string>;
@@ -12,17 +12,17 @@ export async function createContext<T = unknown>(
 ): Promise<Context<T>> {
   const resHeaders = new Headers();
 
-  // Pre-freeze commonly used objects to avoid repeated Object.freeze() calls
-  const frozenParams = Object.freeze({ ...(opts.params || {}) });
-  const frozenEnv = Object.freeze({ ...(opts.env || {}) });
-  const frozenPlugins = Object.freeze({ ...(opts.plugins || {}) });
+  // Optimize: Use direct assignment instead of spreading for better performance
+  const params = opts.params ? Object.freeze({ ...opts.params }) : Object.freeze({});
+  const env = opts.env ? Object.freeze({ ...opts.env }) : Object.freeze({});
+  const plugins = opts.plugins ? Object.freeze({ ...opts.plugins }) : Object.freeze({});
 
   const context: Context<T> = {
     req,
     resHeaders,
-    params: frozenParams,
-    env: frozenEnv,
-    plugins: frozenPlugins,
+    params,
+    env,
+    plugins,
 
     /**
      * Sets a cookie with the given name and value
@@ -90,26 +90,44 @@ export async function createContext<T = unknown>(
     },
 
     json<D = T>(data: D, status = 200, init: ResponseInit = {}): Response {
-      resHeaders.set('Content-Type', 'application/json');
+      // Handle different header types properly
+      const initHeadersObj = init.headers instanceof Headers
+        ? Object.fromEntries(init.headers.entries())
+        : init.headers as Record<string, string> | undefined || {};
+
+      const headersInit: Record<string, string> = {
+        ...initHeadersObj,
+        'Content-Type': 'application/json',
+        ...Object.fromEntries(this.resHeaders.entries())
+      };
+
+      const headers = new Headers(headersInit);
+
       return new Response(JSON.stringify(data), {
         ...init,
         status,
-        headers: {
-          ...Object.fromEntries(resHeaders.entries()),
-          ...init.headers
-        }
+        headers
       });
     },
 
     text(data: string, status = 200, init: ResponseInit = {}): Response {
-      resHeaders.set('Content-Type', 'text/plain');
+      // Handle different header types properly
+      const initHeadersObj = init.headers instanceof Headers
+        ? Object.fromEntries(init.headers.entries())
+        : init.headers as Record<string, string> | undefined || {};
+
+      const headersInit: Record<string, string> = {
+        ...initHeadersObj,
+        'Content-Type': 'text/plain',
+        ...Object.fromEntries(this.resHeaders.entries())
+      };
+
+      const headers = new Headers(headersInit);
+
       return new Response(data, {
         ...init,
         status,
-        headers: {
-          ...Object.fromEntries(resHeaders.entries()),
-          ...init.headers
-        }
+        headers
       });
     },
 

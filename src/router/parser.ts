@@ -4,7 +4,7 @@ import { pathToFileURL } from 'url';
 const { basename, extname } = path;
 
 import { logger } from '../core/logger';
-import type { HttpMethod } from './types';
+import type { HttpMethod } from '../types';
 
 // Allowed file extensions for route handlers
 export const ROUTE_FILE_EXTENSIONS = new Set(['.ts']);

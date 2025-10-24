@@ -3,10 +3,10 @@ import * as path from 'node:path';
 
 const { join, resolve } = path;
 
+import { logger } from '../core/logger';
+import type { Dirent } from '../types';
 import { isRouteFile } from './parser';
 import { registerRouteFile } from './registry';
-import { logger } from '../core/logger';
-import type { Dirent } from './types';
 
 /**
  * Reads a directory and returns its entries with proper typing

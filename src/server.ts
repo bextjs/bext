@@ -3,24 +3,11 @@ import { DEFAULT_SERVER_OPTIONS } from "./core/config";
 import { ServerError } from "./core/errors";
 import { logger } from "./core/logger";
 import { createRouter } from "./router";
-import type { ServerOptions } from "./router/types";
+import type { ServerOptions } from "./types";
 
-// Extend ServerOptions to include additional options
-interface ExtendedServerOptions extends ServerOptions {
-  hostname?: string;
-  debug?: boolean;
-}
-// Extend the Window interface to include the required types
-declare global {
-  interface Window {
-    performance: {
-      now(): number;
-    };
-  }
-}
 
-export async function createServer<T = unknown>(
-  options: ExtendedServerOptions = {}
+export async function createBextServer<T = unknown>(
+  options: ServerOptions = {}
 ) {
   // Merge with default options
   const mergedOptions = { ...DEFAULT_SERVER_OPTIONS, ...options };
@@ -29,17 +16,15 @@ export async function createServer<T = unknown>(
   const router = await createRouter<T>(mergedOptions.routesDir, {
     cache: mergedOptions.cache,
     cacheTtl: mergedOptions.cacheTtl,
-    debug: mergedOptions.debug,
     prefix: mergedOptions.prefix
   });
 
   // Initialize the server
   let server;
-try { 
-  
+try {
+
   server = Bun.serve({
     port: mergedOptions.port,
-    hostname: mergedOptions.hostname,
     development: process.env.NODE_ENV !== "production",
 
     /**
@@ -163,13 +148,6 @@ try {
 
     throw error;
 }
-  // Log server start
-  logger.system(`
-🚀 BextJS server started!
-   • URL: http://${server.hostname}:${server.port}
-   • Environment: ${process.env.NODE_ENV || "development"}
-   • Routes: ${router.routes.length} routes registered
-  `);
 
   // Add graceful shutdown handler
   process.on("SIGINT", () => {
